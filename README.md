@@ -1,32 +1,108 @@
-# unified-workflow
+# Forge
 
-A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that routes between **GSD** (project management) and **Superpowers** (engineering discipline) systems, making them work as one coherent workflow.
+> **v0.2.0** — A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that forges [GSD](https://github.com/cline/gsd) + [Superpowers](https://github.com/nicobailon/claude-code-superpowers) into one coherent workflow
 
-## Problem
+One skill that makes two powerful systems work as one. No database, no config, no overhead — just intelligent routing.
 
-GSD and Superpowers operate at different layers and complement each other, but without guidance they conflict — double-planning, competing subagent models, overlapping design capture.
+## The Problem
 
-## Solution
+GSD (project management) and Superpowers (engineering discipline) are excellent independently, but without coordination they conflict:
 
-A single routing decision at task start based on one question: **does `.planning/` exist?**
+- **Double-planning**: `brainstorming` runs inside a GSD phase, creating competing design docs
+- **Wrong plan location**: SP writes to `docs/plans/`, GSD executors look in `.planning/phases/`
+- **Subagent nesting**: SP's `subagent-driven-development` spawns inside GSD's `execute-phase`, burning 400k tokens
+- **Missing review**: GSD has no code review step — phases ship without quality checks
+- **Wrong tool for the job**: `systematic-debugging` skipped in GSD projects, `/gsd:quick` used for multi-phase work
 
-| Scenario | System | Entry Point |
-|----------|--------|-------------|
-| New project (greenfield) | GSD | `/gsd:new-project` |
-| Brownfield onboarding | GSD | `/gsd:map-codebase` → `/gsd:new-project` |
-| Feature in active GSD project | GSD | `/gsd:discuss-phase` → `plan` → `execute` |
-| Quick task in GSD project | GSD | `/gsd:quick` |
-| Standalone feature (no GSD) | SP | `brainstorming` → `writing-plans` → `subagent-driven-dev` |
-| Bug fix (any context) | SP first | `systematic-debugging` always first |
-| Code review | SP | `requesting-code-review` (GSD has no review) |
-| Resume work | Either | `.planning/` exists → GSD, otherwise SP |
+## The Solution
+
+One routing decision based on one question: **does `.planning/` exist?**
+
+```
+START: "I need to do development work"
+  │
+  ├─ Bug fix?         → systematic-debugging FIRST, then route
+  ├─ Code review?     → requesting-code-review (always SP)
+  │
+  ├─ .planning/ exists? (GSD project)
+  │   ├─ Trivial fix      → /gsd:fast
+  │   ├─ Small task        → /gsd:quick
+  │   ├─ Feature work      → discuss → plan → execute
+  │   ├─ UI/frontend       → /gsd:ui-phase → implement → /gsd:ui-review
+  │   ├─ Resume work       → /gsd:resume-work
+  │   └─ Phase complete    → verify → code review → ship
+  │
+  └─ No .planning/? (standalone)
+      ├─ New project       → /gsd:new-project
+      ├─ Existing codebase → /gsd:map-codebase
+      └─ Feature work      → brainstorming → writing-plans → subagent-driven-dev
+```
 
 ## Two-Layer Model
 
-- **GSD = macro layer** — project → milestones → phases → plans → state
-- **Superpowers = micro layer** — TDD, debugging, verification, code review per task
+| Layer | System | Responsibility |
+|-------|--------|---------------|
+| **Macro** | GSD | Project → milestones → phases → plans → state |
+| **Micro** | Superpowers | TDD, debugging, verification, code review per task |
 
 GSD orchestrates *what* to build. Superpowers enforce *how* to build it correctly.
+
+## Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/forge:status` | Where am I? Unified view across GSD + SP |
+| `/forge:check` | Verify installation and detect misconfigurations |
+| `/forge:next` | Smart next-action — reads state, suggests one command |
+| `/forge:migrate` | Assess upgrade path to Meridian |
+
+## What's New in v0.2
+
+- **Renamed to Forge** — clearer identity, same mission
+- **4 new commands** — status, check, next, migrate
+- **Extended routing** for GSD 1.34+ features: UI phases, security audits, autonomous execution, workstreams, persistent debugging, code review + auto-fix
+- **Complexity escalation** guide: trivial → small → medium → large → autonomous
+- **Conflict resolution** reference for when things go wrong
+- **Comparison matrix** with Meridian and raw GSD+SP
+
+See [CHANGELOG.md](CHANGELOG.md) for full details.
+
+## Install
+
+```bash
+git clone https://github.com/mattjaikaran/forge.git ~/.claude/skills/forge
+```
+
+Verify:
+```bash
+ls ~/.claude/skills/forge/SKILL.md && echo "Installed"
+```
+
+## Prerequisites
+
+- [GSD](https://github.com/cline/gsd) (v1.34+ recommended)
+- [Superpowers](https://github.com/nicobailon/claude-code-superpowers)
+
+Run `/forge:check` after install to verify everything is wired up.
+
+## Structure
+
+```
+forge/
+├── SKILL.md                              # Main routing logic + version
+├── CHANGELOG.md                          # Version history
+├── skills/
+│   ├── status/SKILL.md                   # /forge:status
+│   ├── check/SKILL.md                    # /forge:check
+│   ├── next/SKILL.md                     # /forge:next
+│   └── migrate/SKILL.md                  # /forge:migrate
+└── references/
+    ├── decision-flowchart.md             # Visual decision tree + anti-patterns
+    ├── integration-rules.md              # GSD executor + SP discipline protocols
+    ├── workflows.md                      # 10 step-by-step scenario guides
+    ├── conflict-resolution.md            # Troubleshooting guide
+    └── comparison.md                     # Forge vs Meridian vs raw
+```
 
 ## Key Integration Rules
 
@@ -35,29 +111,25 @@ GSD orchestrates *what* to build. Superpowers enforce *how* to build it correctl
 3. **Subagent execution**: GSD executors OR SP subagent-driven-dev. Never nested.
 4. **Debugging**: SP `systematic-debugging` runs first for all bugs.
 5. **Code review**: Always run after GSD `verify-work` — fills GSD's missing review step.
+6. **UI discipline**: Run `/gsd:ui-phase` before frontend implementation, `/gsd:ui-review` after.
+7. **Learnings persist**: GSD captures execution patterns. Query with `/gsd:intel`.
 
-## Install
+## Forge vs Meridian
 
-```bash
-# Clone into your skills directory
-git clone https://github.com/mattjaikaran/unified-workflow.git ~/.claude/skills/unified-workflow
-```
+| | Forge | [Meridian](https://github.com/mattjaikaran/meridian) |
+|--|-------|----------|
+| **Approach** | Routes between GSD + SP | Standalone engine |
+| **Setup** | `git clone` and go | `git clone` + `/meridian:init` |
+| **State** | File-based (`.planning/`) | SQLite database |
+| **Dependencies** | GSD + Superpowers | None |
+| **Commands** | 4 + routes to GSD/SP | 39 native |
+| **Resume** | File-based | Deterministic (same state = same prompt) |
+| **Quality gates** | Suggested | Enforced |
+| **Board sync** | No | Yes (Linear, Jira) |
+| **Remote dispatch** | No | Yes |
+| **Best for** | Simple-to-medium projects | Complex, long-running projects |
 
-## Structure
-
-```
-unified-workflow/
-├── SKILL.md                              # Routing logic (<500 words)
-└── references/
-    ├── decision-flowchart.md             # Visual decision tree + anti-patterns
-    ├── integration-rules.md              # GSD executor + SP discipline protocols
-    └── unified-workflows.md              # 7 step-by-step scenario guides
-```
-
-## Prerequisites
-
-- [Superpowers](https://github.com/nicobailon/claude-code-superpowers) skills installed
-- [GSD](https://github.com/cline/gsd) skills installed
+**Start here. Upgrade when you need to.** Run `/forge:migrate` to assess.
 
 ## License
 

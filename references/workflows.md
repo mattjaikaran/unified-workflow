@@ -1,6 +1,6 @@
-# Unified Workflow Guides
+# Forge Workflow Guides
 
-Seven step-by-step guides covering the most common development scenarios.
+Step-by-step guides covering common development scenarios.
 
 ---
 
@@ -14,8 +14,8 @@ Seven step-by-step guides covering the most common development scenarios.
 3. `/gsd:plan-phase` for Phase 1 — create executable PLAN.md files
 4. `/gsd:execute-phase` for Phase 1 — fresh-context executors build each plan
 5. `/gsd:verify-work` — validate features match phase goals
-6. Invoke **REQUIRED SUB-SKILL:** `requesting-code-review` — review code quality
-7. Invoke **REQUIRED SUB-SKILL:** `finishing-a-development-branch` — merge/PR decision
+6. `requesting-code-review` — review code quality
+7. `finishing-a-development-branch` — merge/PR decision
 8. Repeat steps 2-7 for subsequent phases
 
 **Plan location**: `.planning/phases/1/`, `.planning/phases/2/`, etc.
@@ -33,8 +33,8 @@ Seven step-by-step guides covering the most common development scenarios.
 4. `/gsd:plan-phase` — create PLAN.md files with task breakdown
 5. `/gsd:execute-phase` — build the feature
 6. `/gsd:verify-work` — validate against phase goals
-7. Invoke **REQUIRED SUB-SKILL:** `requesting-code-review` — code quality check
-8. Invoke **REQUIRED SUB-SKILL:** `finishing-a-development-branch` — merge/PR
+7. `requesting-code-review` — code quality check
+8. `finishing-a-development-branch` — merge/PR
 
 **Do NOT**: Run `brainstorming` or `writing-plans` (SP standalone skills). Use `discuss-phase` instead — it feeds CONTEXT.md to downstream GSD agents.
 
@@ -45,7 +45,7 @@ Seven step-by-step guides covering the most common development scenarios.
 **When**: A bug is reported or discovered, regardless of project type.
 
 **Steps:**
-1. Invoke **REQUIRED SUB-SKILL:** `systematic-debugging` — ALWAYS first
+1. `systematic-debugging` — ALWAYS first
    - Phase 1: Reproduce and characterize
    - Phase 2: Form hypotheses, rank by likelihood
    - Phase 3: Binary search / targeted investigation
@@ -53,7 +53,9 @@ Seven step-by-step guides covering the most common development scenarios.
 2. Route the fix based on project context:
    - **GSD project**: `/gsd:quick` for small fixes, or update current phase plan
    - **Standalone**: Apply fix directly, commit
-3. Invoke **REQUIRED SUB-SKILL:** `verification-before-completion` — prove the fix works
+3. `verification-before-completion` — prove the fix works
+
+**For persistent/complex bugs in GSD projects**: Use `/gsd:debug` instead — it maintains debug state across sessions with a knowledge base.
 
 **Do NOT**: Skip systematic-debugging even in GSD projects. GSD deviation Rule 1 ("auto-fix bugs") only covers incidental executor bugs, not user-reported issues.
 
@@ -64,15 +66,17 @@ Seven step-by-step guides covering the most common development scenarios.
 **When**: Small task that doesn't warrant full phase planning.
 
 **Steps (GSD project):**
-1. `/gsd:quick` — executes with atomic commits and state tracking
+1. Assess size first:
+   - **Trivial** (typo, config): `/gsd:fast` — inline, no overhead
+   - **Small** (< 30 min, < 5 files): `/gsd:quick` — atomic commits, state tracking
 2. Use `--discuss` flag if requirements need clarification
 3. Use `--full` flag if the task turns out to be bigger than expected
-4. Invoke **REQUIRED SUB-SKILL:** `verification-before-completion`
+4. `verification-before-completion`
 
 **Steps (standalone):**
 1. Assess scope — if truly small (< 3 steps), just do it
 2. If it grows, invoke `brainstorming` → `writing-plans` → `subagent-driven-development`
-3. Invoke **REQUIRED SUB-SKILL:** `verification-before-completion`
+3. `verification-before-completion`
 
 **Escalation rule**: If a "quick" task exceeds 30 minutes or touches 5+ files, stop and upgrade to full phase planning (GSD) or plan-then-execute (SP).
 
@@ -87,6 +91,8 @@ Seven step-by-step guides covering the most common development scenarios.
 2. Review generated docs in `.planning/codebase/`
 3. `/gsd:new-project` — define project goals, create ROADMAP.md using codebase analysis
 4. Continue with Workflow 1 (greenfield) from step 2
+
+**Alternative (lighter)**: `/gsd:scan` for a rapid assessment instead of full mapping.
 
 **Key insight**: `map-codebase` produces documents that `new-project` consumes. Run them in this order.
 
@@ -107,6 +113,8 @@ Seven step-by-step guides covering the most common development scenarios.
 3. Pick up from the last incomplete step in the plan
 4. Consider upgrading to GSD if the project has grown complex
 
+**Shortcut**: Run `/forge:next` — it reads all state and tells you exactly what to do.
+
 **Context restoration priority:**
 1. `.planning/STATE.md` (most reliable, machine-written)
 2. `.planning/phases/N/HANDOFF.md` (human-readable pause point)
@@ -121,8 +129,8 @@ Seven step-by-step guides covering the most common development scenarios.
 
 **Phase completion:**
 1. `/gsd:verify-work` — validate features match phase acceptance criteria
-2. Invoke **REQUIRED SUB-SKILL:** `requesting-code-review` — code quality review
-3. Invoke **REQUIRED SUB-SKILL:** `finishing-a-development-branch` — merge/PR
+2. `requesting-code-review` — code quality review
+3. `finishing-a-development-branch` — merge/PR
 4. `/gsd:progress` — check if more phases remain in milestone
 
 **Milestone completion:**
@@ -135,3 +143,65 @@ Seven step-by-step guides covering the most common development scenarios.
 **Post-milestone:**
 - `/gsd:new-milestone` if continuing the project
 - Update project README/docs to reflect delivered functionality
+
+---
+
+## 8. UI/Frontend Phase
+
+**When**: A phase involves frontend, UI, or design work.
+
+**Steps:**
+1. `/gsd:ui-phase` — produce UI-SPEC.md design contract
+   - Detects existing design system
+   - Defines component hierarchy, responsive rules, accessibility
+2. `/gsd:discuss-phase` → `/gsd:plan-phase` — normal planning, informed by UI-SPEC.md
+3. `/gsd:execute-phase` — implement against the design contract
+4. `/gsd:ui-review` — 6-pillar visual audit of implementation
+5. `/gsd:verify-work` + `requesting-code-review` — standard completion
+
+**Key insight**: UI-SPEC.md is the contract between design intent and implementation. Skip it and you get inconsistent UI.
+
+---
+
+## 9. Autonomous Execution
+
+**When**: You want to run all remaining phases hands-off.
+
+**Steps:**
+1. Verify all prerequisite phases are complete
+2. `/gsd:autonomous` — runs discuss → plan → execute for each remaining phase
+3. Review results after completion
+4. Run `requesting-code-review` on the full body of work
+
+**When to use**: Well-defined roadmap with clear phase goals. Not recommended for exploratory or research-heavy work.
+
+---
+
+## 10. Security Audit
+
+**When**: Phase involves security-sensitive code (auth, payments, data handling).
+
+**Steps:**
+1. Complete the phase normally (discuss → plan → execute → verify)
+2. `/gsd:secure-phase` — verify threat mitigations exist in code
+3. Review SECURITY.md output
+4. Fix any gaps before code review
+5. `requesting-code-review` with security focus
+
+---
+
+## Utility Commands
+
+These don't follow a workflow — use them as needed:
+
+| Command | When to Use |
+|---------|-------------|
+| `/forge:status` | See where you are across both systems |
+| `/forge:check` | Verify GSD + SP installation health |
+| `/forge:next` | Get one recommended next action |
+| `/forge:migrate` | Assess upgrade path to Meridian |
+| `/gsd:intel` | Query codebase intelligence before planning |
+| `/gsd:stats` | View project metrics and timeline |
+| `/gsd:note` | Capture an idea for later |
+| `/gsd:plant-seed` | Save an idea with trigger conditions |
+| `/gsd:session-report` | Summarize current session's work |
