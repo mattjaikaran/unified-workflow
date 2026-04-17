@@ -1,6 +1,6 @@
 ---
-name: forge:migrate
-description: "Evaluate whether to upgrade from Forge (GSD + Superpowers) to Meridian, and guide the migration if ready. Use when projects outgrow the routing model."
+name: torque:migrate
+description: "Evaluate whether to upgrade from Torque (GSD + Superpowers) to Meridian, and guide the migration if ready. Use when projects outgrow the routing model."
 ---
 
 # Migrate to Meridian
@@ -9,11 +9,11 @@ Evaluate whether the current project would benefit from upgrading to [Meridian](
 
 ## What is Meridian?
 
-Meridian is the standalone successor to Forge. Instead of routing between GSD and Superpowers, Meridian IS the system — a SQLite-backed state machine with 39 commands, deterministic resume, quality gates, and remote agent dispatch.
+Meridian is the standalone successor to Torque. Instead of routing between GSD and Superpowers, Meridian IS the system — a SQLite-backed state machine with 39 commands, deterministic resume, quality gates, and remote agent dispatch.
 
 ## When to Migrate
 
-### Signals you've outgrown Forge
+### Signals you've outgrown Torque
 
 Run through this checklist. If 3+ are true, Meridian is the right move.
 
@@ -26,7 +26,7 @@ Run through this checklist. If 3+ are true, Meridian is the right move.
 - [ ] **Execution learnings** — you want the system to learn from failures and improve over time
 - [ ] **You're fighting the routing** — GSD and SP conflict resolution is becoming overhead
 
-### Stay with Forge if
+### Stay with Torque if
 
 - Project is simple (< 3 milestones expected)
 - You like GSD and Superpowers separately and just need them coordinated
@@ -52,7 +52,7 @@ Then run `/meridian:init` — it creates `.meridian/state.db` and imports existi
 
 ### Step 3: Map your workflow
 
-| Forge (GSD + SP) | Meridian equivalent |
+| Torque (GSD + SP) | Meridian equivalent |
 |-------------------|-------------------|
 | `/gsd:new-project` | `/meridian:init` |
 | `/gsd:discuss-phase` | `/meridian:discuss` |
@@ -64,8 +64,8 @@ Then run `/meridian:init` — it creates `.meridian/state.db` and imports existi
 | `/gsd:fast` | `/meridian:fast` |
 | `requesting-code-review` | `/meridian:review` (two-stage) |
 | `systematic-debugging` | `/meridian:debug` (with KB) |
-| `/forge:status` | `/meridian:status` or `/meridian:dashboard` |
-| `/forge:next` | `/meridian:next` |
+| `/torque:status` | `/meridian:status` or `/meridian:dashboard` |
+| `/torque:next` | `/meridian:next` |
 
 ### Step 4: What you gain
 
@@ -76,13 +76,13 @@ Then run `/meridian:init` — it creates `.meridian/state.db` and imports existi
 - **Debug knowledge base**: Resolved bugs persist and inform future debugging.
 - **Board sync**: Connect Linear/Jira with a pluggable provider.
 - **Remote dispatch**: Send plans to other agents for autonomous execution.
-- **39 commands**: Everything Forge routes to, Meridian provides natively.
+- **39 commands**: Everything Torque routes to, Meridian provides natively.
 
 ### Step 5: Clean up
 
-After migrating, you can optionally remove Forge:
+After migrating, you can optionally remove Torque:
 ```bash
-rm -rf ~/.claude/skills/forge
+rm -rf ~/.claude/skills/torque
 ```
 
 The `.planning/` directory is still valid — Meridian uses `.meridian/` alongside it.
@@ -111,5 +111,5 @@ After evaluating the checklist:
 ## Rules
 
 - Never modify any files. This is assessment-only unless the user explicitly asks to migrate.
-- Be honest — if Forge is sufficient, say so.
+- Be honest — if Torque is sufficient, say so.
 - Always show the command mapping table so the user knows what changes.

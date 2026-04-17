@@ -36,7 +36,7 @@ START: "I need to do development work"
   │       └─ Resuming standalone?           → Re-read docs/plans/, pick up where left off
   │
   ├─ Not sure what to do?
-  │   └─ /forge:next (reads state, suggests one action)
+  │   └─ /torque:next (reads state, suggests one action)
   │
   └─ END
 ```

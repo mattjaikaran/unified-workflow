@@ -1,4 +1,4 @@
-# Forge Workflow Guides
+# Torque Workflow Guides
 
 Step-by-step guides covering common development scenarios.
 
@@ -113,7 +113,7 @@ Step-by-step guides covering common development scenarios.
 3. Pick up from the last incomplete step in the plan
 4. Consider upgrading to GSD if the project has grown complex
 
-**Shortcut**: Run `/forge:next` — it reads all state and tells you exactly what to do.
+**Shortcut**: Run `/torque:next` — it reads all state and tells you exactly what to do.
 
 **Context restoration priority:**
 1. `.planning/STATE.md` (most reliable, machine-written)
@@ -196,10 +196,10 @@ These don't follow a workflow — use them as needed:
 
 | Command | When to Use |
 |---------|-------------|
-| `/forge:status` | See where you are across both systems |
-| `/forge:check` | Verify GSD + SP installation health |
-| `/forge:next` | Get one recommended next action |
-| `/forge:migrate` | Assess upgrade path to Meridian |
+| `/torque:status` | See where you are across both systems |
+| `/torque:check` | Verify GSD + SP installation health |
+| `/torque:next` | Get one recommended next action |
+| `/torque:migrate` | Assess upgrade path to Meridian |
 | `/gsd:intel` | Query codebase intelligence before planning |
 | `/gsd:stats` | View project metrics and timeline |
 | `/gsd:note` | Capture an idea for later |

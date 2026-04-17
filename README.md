@@ -1,6 +1,6 @@
-# Forge
+# Torque
 
-> **v0.2.0** — A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that forges [GSD](https://github.com/cline/gsd) + [Superpowers](https://github.com/nicobailon/claude-code-superpowers) into one coherent workflow
+> **v0.3.0** — A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that converts [GSD](https://github.com/cline/gsd) + [Superpowers](https://github.com/nicobailon/claude-code-superpowers) into one coherent workflow
 
 One skill that makes two powerful systems work as one. No database, no config, no overhead — just intelligent routing.
 
@@ -51,15 +51,14 @@ GSD orchestrates *what* to build. Superpowers enforce *how* to build it correctl
 
 | Command | Purpose |
 |---------|---------|
-| `/forge:status` | Where am I? Unified view across GSD + SP |
-| `/forge:check` | Verify installation and detect misconfigurations |
-| `/forge:next` | Smart next-action — reads state, suggests one command |
-| `/forge:migrate` | Assess upgrade path to Meridian |
+| `/torque:status` | Where am I? Unified view across GSD + SP |
+| `/torque:check` | Verify installation and detect misconfigurations |
+| `/torque:next` | Smart next-action — reads state, suggests one command |
+| `/torque:migrate` | Assess upgrade path to Meridian |
 
 ## What's New in v0.2
 
-- **Renamed to Forge** — clearer identity, same mission
-- **4 new commands** — status, check, next, migrate
+- **4 commands** — status, check, next, migrate
 - **Extended routing** for GSD 1.34+ features: UI phases, security audits, autonomous execution, workstreams, persistent debugging, code review + auto-fix
 - **Complexity escalation** guide: trivial → small → medium → large → autonomous
 - **Conflict resolution** reference for when things go wrong
@@ -70,12 +69,12 @@ See [CHANGELOG.md](CHANGELOG.md) for full details.
 ## Install
 
 ```bash
-git clone https://github.com/mattjaikaran/forge.git ~/.claude/skills/forge
+git clone https://github.com/mattjaikaran/torque.git ~/.claude/skills/torque
 ```
 
 Verify:
 ```bash
-ls ~/.claude/skills/forge/SKILL.md && echo "Installed"
+ls ~/.claude/skills/torque/SKILL.md && echo "Installed"
 ```
 
 ## Prerequisites
@@ -83,25 +82,25 @@ ls ~/.claude/skills/forge/SKILL.md && echo "Installed"
 - [GSD](https://github.com/cline/gsd) (v1.34+ recommended)
 - [Superpowers](https://github.com/nicobailon/claude-code-superpowers)
 
-Run `/forge:check` after install to verify everything is wired up.
+Run `/torque:check` after install to verify everything is wired up.
 
 ## Structure
 
 ```
-forge/
+torque/
 ├── SKILL.md                              # Main routing logic + version
 ├── CHANGELOG.md                          # Version history
 ├── skills/
-│   ├── status/SKILL.md                   # /forge:status
-│   ├── check/SKILL.md                    # /forge:check
-│   ├── next/SKILL.md                     # /forge:next
-│   └── migrate/SKILL.md                  # /forge:migrate
+│   ├── status/SKILL.md                   # /torque:status
+│   ├── check/SKILL.md                    # /torque:check
+│   ├── next/SKILL.md                     # /torque:next
+│   └── migrate/SKILL.md                  # /torque:migrate
 └── references/
     ├── decision-flowchart.md             # Visual decision tree + anti-patterns
     ├── integration-rules.md              # GSD executor + SP discipline protocols
     ├── workflows.md                      # 10 step-by-step scenario guides
     ├── conflict-resolution.md            # Troubleshooting guide
-    └── comparison.md                     # Forge vs Meridian vs raw
+    └── comparison.md                     # Torque vs Meridian vs raw
 ```
 
 ## Key Integration Rules
@@ -114,9 +113,9 @@ forge/
 6. **UI discipline**: Run `/gsd:ui-phase` before frontend implementation, `/gsd:ui-review` after.
 7. **Learnings persist**: GSD captures execution patterns. Query with `/gsd:intel`.
 
-## Forge vs Meridian
+## Torque vs Meridian
 
-| | Forge | [Meridian](https://github.com/mattjaikaran/meridian) |
+| | Torque | [Meridian](https://github.com/mattjaikaran/meridian) |
 |--|-------|----------|
 | **Approach** | Routes between GSD + SP | Standalone engine |
 | **Setup** | `git clone` and go | `git clone` + `/meridian:init` |
@@ -129,7 +128,7 @@ forge/
 | **Remote dispatch** | No | Yes |
 | **Best for** | Simple-to-medium projects | Complex, long-running projects |
 
-**Start here. Upgrade when you need to.** Run `/forge:migrate` to assess.
+**Start here. Upgrade when you need to.** Run `/torque:migrate` to assess.
 
 ## License
 

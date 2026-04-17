@@ -1,10 +1,10 @@
 ---
-name: forge
-version: 0.2.0
-description: "Forge: a Claude Code skill that forges GSD (project management) and Superpowers (engineering discipline) into one coherent workflow. Prevents double-planning, conflicting subagent models, and overlapping design capture by providing a single routing decision at task start."
+name: torque
+version: 0.3.0
+description: "Torque: a Claude Code skill that converts GSD (project management) and Superpowers (engineering discipline) into one coherent workflow. Prevents double-planning, conflicting subagent models, and overlapping design capture by providing a single routing decision at task start."
 ---
 
-# Forge — GSD + Superpowers, United
+# Torque — GSD + Superpowers, United
 
 ## Core Rule
 
@@ -48,14 +48,14 @@ Check for `.planning/` directory in the project root. This single check determin
 
 GSD orchestrates WHAT to build and in what order. Superpowers enforce HOW to build each piece correctly.
 
-## Forge Commands
+## Torque Commands
 
 | Command | Purpose |
 |---------|---------|
-| `/forge:status` | Where am I? Single view across GSD + SP state |
-| `/forge:check` | Verify GSD + SP installation and detect misconfigurations |
-| `/forge:next` | Smart next-action — reads state, suggests one command |
-| `/forge:migrate` | Upgrade path to [Meridian](https://github.com/mattjaikaran/meridian) |
+| `/torque:status` | Where am I? Single view across GSD + SP state |
+| `/torque:check` | Verify GSD + SP installation and detect misconfigurations |
+| `/torque:next` | Smart next-action — reads state, suggests one command |
+| `/torque:migrate` | Upgrade path to [Meridian](https://github.com/mattjaikaran/meridian) |
 
 ## Integration Rules (Summary)
 

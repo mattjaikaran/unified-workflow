@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l /Users/mattjaikaran/dev/meridian/scripts/*.py)",
+      "Bash(ls /Users/mattjaikaran/dev/meridian/tests/*.py)",
+      "Bash(git commit:*)",
+      "Bash(gh repo:*)",
+      "Bash(gh search:*)",
+      "Bash(git remote:*)",
+      "Bash(ln -s /Users/mattjaikaran/dev/torque ~/.claude/skills/torque)",
+      "Bash(git add:*)"
+    ]
+  }
+}

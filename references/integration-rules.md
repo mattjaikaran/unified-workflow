@@ -10,7 +10,7 @@ When a GSD plan does NOT specify TDD but the task involves new logic:
 
 ## Rule 2: Verification Enhancement
 
-GSD executors run self-check per plan. Enhancement for Forge:
+GSD executors run self-check per plan. Enhancement for Torque:
 1. GSD executor completes plan → writes SUMMARY.md
 2. Before marking plan complete, run full project test suite (not just plan-scoped tests)
 3. If tests fail, treat as deviation Rule 1 (auto-fix if < 5 min)
@@ -68,7 +68,7 @@ GSD 1.34+ captures execution patterns automatically via the learnings system:
 - Before planning: `/gsd:intel` surfaces relevant learnings
 - Cross-phase: learnings from early phases inform later planning
 
-**Forge enhancement**: After SP code review finds recurring issues, capture the pattern:
+**Torque enhancement**: After SP code review finds recurring issues, capture the pattern:
 - GSD projects: learnings are auto-captured by the system
 - SP standalone: manually note patterns in `docs/lessons.md`
 

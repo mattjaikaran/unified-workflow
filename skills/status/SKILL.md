@@ -1,9 +1,9 @@
 ---
-name: forge:status
+name: torque:status
 description: "Show current project state across GSD and Superpowers systems. Reads .planning/, docs/plans/, and git state to give a unified view of where you are and what to do next."
 ---
 
-# Forge Status
+# Torque Status
 
 Show the developer a unified view of their project state. No database — read files and git only.
 

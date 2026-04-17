@@ -1,9 +1,9 @@
 ---
-name: forge:check
+name: torque:check
 description: "Verify GSD and Superpowers installation, detect version mismatches, and flag common misconfigurations. Run this when things aren't working as expected."
 ---
 
-# Forge Health Check
+# Torque Health Check
 
 Verify that GSD and Superpowers are installed correctly and the current project has no configuration conflicts.
 
@@ -35,11 +35,11 @@ for skill in systematic-debugging test-driven-development brainstorming writing-
 done
 ```
 
-### Step 3: Check Forge installation
+### Step 3: Check Torque installation
 
 ```bash
 # Verify this skill is properly installed
-ls ~/.claude/skills/forge/SKILL.md 2>/dev/null && echo "FORGE_INSTALLED=true" || echo "FORGE_INSTALLED=false"
+ls ~/.claude/skills/torque/SKILL.md 2>/dev/null && echo "TORQUE_INSTALLED=true" || echo "TORQUE_INSTALLED=false"
 ```
 
 ### Step 4: Project-level checks
@@ -54,14 +54,14 @@ Run these checks in the current working directory:
 ### Step 5: Output format
 
 ```
-## Forge Health Check
+## Torque Health Check
 
 ### Dependencies
 | System | Status | Version |
 |--------|--------|---------|
 | GSD | ✓ Installed | 1.34.2 |
 | Superpowers | ✓ Installed (8/8 core skills) | — |
-| Forge | ✓ Installed | 0.2.0 |
+| Torque | ✓ Installed | 0.3.0 |
 
 ### Project Checks
 ✓ Plan location is consistent (.planning/ only)

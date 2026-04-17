@@ -1,6 +1,6 @@
 # Conflict Resolution Guide
 
-What to do when things go wrong in Forge.
+What to do when things go wrong in Torque.
 
 ---
 
@@ -17,7 +17,7 @@ What to do when things go wrong in Forge.
 2. Migrate plans to the owning system:
    - **GSD wins**: Move relevant `docs/plans/` content into a new GSD phase via `/gsd:add-phase`, then delete `docs/plans/`
    - **SP wins**: This is rare. Usually means `.planning/` was created accidentally. Archive it: `mv .planning/ .planning.bak/`
-3. Run `/forge:check` to verify the conflict is resolved
+3. Run `/torque:check` to verify the conflict is resolved
 
 ---
 
@@ -28,7 +28,7 @@ What to do when things go wrong in Forge.
 **Why it happens**: Context was lost between sessions, executor hit an unrecoverable error, or scope grew beyond what was planned.
 
 **Fix**:
-1. Run `/forge:status` to see exactly where things stalled
+1. Run `/torque:status` to see exactly where things stalled
 2. Check for `HANDOFF.md` in the phase directory — if present, run `/gsd:resume-work`
 3. If no handoff exists:
    - Read the incomplete plan's SUMMARY.md to understand what was done
@@ -63,7 +63,7 @@ What to do when things go wrong in Forge.
 **Fix**:
 1. Run `requesting-code-review` now — it's never too late
 2. If issues are found, fix them before shipping
-3. The `/forge:next` command catches this gap and will suggest review when it's missing
+3. The `/torque:next` command catches this gap and will suggest review when it's missing
 
 ---
 
@@ -99,7 +99,7 @@ What to do when things go wrong in Forge.
 
 ## 7. When to Upgrade to Meridian
 
-If you're hitting these conflicts repeatedly, consider whether Forge's routing model is adding overhead. Run `/forge:migrate` to assess.
+If you're hitting these conflicts repeatedly, consider whether Torque's routing model is adding overhead. Run `/torque:migrate` to assess.
 
 **Signs the routing model is the problem**:
 - You spend more time managing GSD + SP coordination than doing actual work
@@ -107,4 +107,4 @@ If you're hitting these conflicts repeatedly, consider whether Forge's routing m
 - You need features that span both systems (e.g., review history, execution learnings)
 - Multi-milestone projects with complex phase dependencies
 
-**Meridian replaces Forge's routing model entirely** — it's a single system that handles everything GSD and SP do, with SQLite-backed state and deterministic resume.
+**Meridian replaces Torque's routing model entirely** — it's a single system that handles everything GSD and SP do, with SQLite-backed state and deterministic resume.

@@ -1,14 +1,14 @@
-# Comparison: Forge vs Meridian vs Raw GSD+SP
+# Comparison: Torque vs Meridian vs Raw GSD+SP
 
 ## Overview
 
-| | Raw GSD + SP | Forge | Meridian |
+| | Raw GSD + SP | Torque | Meridian |
 |--|-------------|-----------------|----------|
 | **What it is** | Two separate skill systems | Routing layer that coordinates them | Standalone workflow engine |
 | **Setup** | Install both, figure out when to use which | Install both + this router | Install one system |
 | **State storage** | `.planning/` files (GSD) | `.planning/` files (GSD) | SQLite database |
 | **Dependencies** | GSD + Superpowers | GSD + Superpowers | None (stdlib only) |
-| **Commands** | 60+ GSD + 104 SP skills | 4 Forge + routes to GSD/SP | 39 native commands |
+| **Commands** | 60+ GSD + 104 SP skills | 4 Torque + routes to GSD/SP | 39 native commands |
 | **Lines of code** | ~15k combined | ~1.5k | ~11k |
 | **Resume** | File-based (STATE.md, HANDOFF.md) | File-based (same as GSD) | Deterministic (SQLite → prompt) |
 | **Code review** | Manual (SP skill) | Guided (integration rules) | Built-in two-stage |
@@ -21,7 +21,7 @@
 ## Feature Matrix
 
 ### Project Management
-| Feature | Forge | Meridian |
+| Feature | Torque | Meridian |
 |---------|-----------------|----------|
 | Project initialization | ✓ (routes to GSD) | ✓ (native) |
 | Milestone tracking | ✓ (routes to GSD) | ✓ (native) |
@@ -31,7 +31,7 @@
 | Autonomous mode | ✓ (routes to GSD) | ✓ (native) |
 
 ### Engineering Discipline
-| Feature | Forge | Meridian |
+| Feature | Torque | Meridian |
 |---------|-----------------|----------|
 | TDD enforcement | ✓ (routes to SP) | ✓ (native, per-plan flag) |
 | Systematic debugging | ✓ (routes to SP) | ✓ (native + knowledge base) |
@@ -39,13 +39,13 @@
 | Verification | ✓ (routes to SP) | ✓ (native + Nyquist check) |
 | Branch completion | ✓ (routes to SP) | ✓ (native ship command) |
 
-### Unique to Forge
+### Unique to Torque
 | Feature | Description |
 |---------|-------------|
 | Zero config | No database, no initialization. Just install and go. |
 | System agnostic | Leverages GSD AND SP — uses the best of both |
 | Lightweight | ~1.5k lines total. Installs in seconds. |
-| Health check | `/forge:check` verifies both systems work |
+| Health check | `/torque:check` verifies both systems work |
 | Smart routing | One question (`.planning/`?) routes everything |
 
 ### Unique to Meridian
@@ -62,7 +62,7 @@
 
 ## When to Use Which
 
-### Use Forge when:
+### Use Torque when:
 - You already have GSD and Superpowers and like them
 - Your project is straightforward (1-3 milestones)
 - You want zero setup overhead
@@ -84,7 +84,7 @@
 
 ## Migration Triggers
 
-Consider upgrading from Forge to Meridian when:
+Consider upgrading from Torque to Meridian when:
 
 1. **3+ HANDOFF.md files** in your project — session continuity is a recurring pain
 2. **2+ milestones completed** — project complexity justifies the investment
@@ -92,4 +92,4 @@ Consider upgrading from Forge to Meridian when:
 4. **Team growth** — multiple people or agents need coordinated access
 5. **Quality gaps** — verification and review are being skipped despite integration rules
 
-Run `/forge:migrate` for a project-specific assessment.
+Run `/torque:migrate` for a project-specific assessment.

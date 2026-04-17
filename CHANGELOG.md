@@ -1,15 +1,22 @@
 # Changelog
 
-All notable changes to Forge will be documented in this file.
+All notable changes to Torque will be documented in this file.
+
+## [0.3.0] - 2026-04-16
+
+### Changed
+- **Renamed to Torque** from Forge — name collision avoidance
+- All commands updated: `/torque:status`, `/torque:check`, `/torque:next`, `/torque:migrate`
+- Updated all references, install paths, and documentation
 
 ## [0.2.0] - 2026-04-13
 
 ### Added
-- **Renamed to Forge** — GSD + Superpowers, forged into one workflow
-- **`/forge:status`** — unified project state view across GSD + Superpowers
-- **`/forge:check`** — dependency health check and misconfiguration detection
-- **`/forge:next`** — smart next-action recommendation based on project state
-- **`/forge:migrate`** — upgrade path assessment and guide to Meridian
+- **Unified workflow skill** — GSD + Superpowers, united into one workflow
+- **`/torque:status`** — unified project state view across GSD + Superpowers
+- **`/torque:check`** — dependency health check and misconfiguration detection
+- **`/torque:next`** — smart next-action recommendation based on project state
+- **`/torque:migrate`** — upgrade path assessment and guide to Meridian
 - Extended routing table covering GSD 1.34+ features:
   - UI phases (`/gsd:ui-phase`, `/gsd:ui-review`)
   - Security audits (`/gsd:secure-phase`)
@@ -21,7 +28,7 @@ All notable changes to Forge will be documented in this file.
   - Session reports and project stats
 - Complexity escalation guide (trivial → small → medium → large → autonomous)
 - Conflict resolution reference guide
-- Comparison matrix: Forge vs Meridian vs raw GSD+SP
+- Comparison matrix: Torque vs Meridian vs raw GSD+SP
 - Version tracking in SKILL.md frontmatter
 
 ### Changed

@@ -1,9 +1,9 @@
 ---
-name: forge:next
+name: torque:next
 description: "Determine the single best next action based on current project state. Reads GSD state, SP plans, and git context to suggest exactly one command to run."
 ---
 
-# Forge Next Action
+# Torque Next Action
 
 Analyze project state and recommend exactly ONE next command. Think of this as a GPS for your development workflow.
 
@@ -11,7 +11,7 @@ Analyze project state and recommend exactly ONE next command. Think of this as a
 
 ### Step 1: Gather state
 
-Same as `/forge:status` — read `.planning/`, `docs/plans/`, git state. But don't output the full status. Focus on determining the current position.
+Same as `/torque:status` — read `.planning/`, `docs/plans/`, git state. But don't output the full status. Focus on determining the current position.
 
 ### Step 2: Decision tree
 
