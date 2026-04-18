@@ -97,7 +97,48 @@ What to do when things go wrong in Torque.
 
 ---
 
-## 7. When to Upgrade to Meridian
+## 7. Review Feedback Implemented Blindly
+
+**Symptom**: Code review suggestions were implemented without verification. Some introduced regressions or were based on incorrect assumptions.
+
+**Why it happens**: Default instinct is to accept all review feedback. But reviewers lack full context — they see the diff, not the reasoning.
+
+**Fix**:
+1. Run `receiving-code-review` (SP) — it forces verification of each suggestion
+2. For each comment: Is the concern valid? Does the fix work? Would it regress?
+3. Push back on incorrect suggestions with evidence, not defensiveness
+4. `verification-before-completion` after implementing accepted fixes
+
+---
+
+## 8. `.planning/` Commits in PR
+
+**Symptom**: PR has commits touching `.planning/` files, cluttering the code review with internal state.
+
+**Why it happens**: Normal GSD workflow commits state changes alongside code changes.
+
+**Fix**:
+1. Use `/gsd:pr-branch` — creates a branch that filters out `.planning/` commits
+2. Or use `/gsd:ship` — handles PR creation with clean filtering built-in
+3. For future work: commit `.planning/` changes separately from code changes when possible
+
+---
+
+## 9. AI Phase Without Eval Strategy
+
+**Symptom**: AI/LLM features were built without evaluation criteria. Discovering failure modes in production.
+
+**Why it happens**: Skipped `/gsd:ai-integration-phase` and went straight to implementation.
+
+**Fix**:
+1. Run `/gsd:eval-review` retroactively — audits evaluation coverage
+2. Scores each dimension as COVERED/PARTIAL/MISSING
+3. Fill gaps identified in the EVAL-REVIEW.md
+4. For future AI phases: always run `/gsd:ai-integration-phase` first to produce AI-SPEC.md
+
+---
+
+## 10. When to Upgrade to Meridian
 
 If you're hitting these conflicts repeatedly, consider whether Torque's routing model is adding overhead. Run `/torque:migrate` to assess.
 

@@ -8,8 +8,8 @@
 | **Setup** | Install both, figure out when to use which | Install both + this router | Install one system |
 | **State storage** | `.planning/` files (GSD) | `.planning/` files (GSD) | SQLite database |
 | **Dependencies** | GSD + Superpowers | GSD + Superpowers | None (stdlib only) |
-| **Commands** | 60+ GSD + 104 SP skills | 4 Torque + routes to GSD/SP | 39 native commands |
-| **Lines of code** | ~15k combined | ~1.5k | ~11k |
+| **Commands** | 60+ GSD + 104 SP skills | 4 Torque + routes to 40+ GSD / 15+ SP | 39 native commands |
+| **Lines of code** | ~15k combined | ~2.5k | ~11k |
 | **Resume** | File-based (STATE.md, HANDOFF.md) | File-based (same as GSD) | Deterministic (SQLite → prompt) |
 | **Code review** | Manual (SP skill) | Guided (integration rules) | Built-in two-stage |
 | **Debugging** | SP systematic-debugging | Same, with routing guidance | 4-phase with persistent KB |
@@ -44,9 +44,13 @@
 |---------|-------------|
 | Zero config | No database, no initialization. Just install and go. |
 | System agnostic | Leverages GSD AND SP — uses the best of both |
-| Lightweight | ~1.5k lines total. Installs in seconds. |
+| Lightweight | ~2.5k lines total. Installs in seconds. |
 | Health check | `/torque:check` verifies both systems work |
 | Smart routing | One question (`.planning/`?) routes everything |
+| Full coverage | Routes 40+ GSD commands and 15+ SP skills into unified workflows |
+| AI integration path | Routes `/gsd:ai-integration-phase` → eval pipeline for AI/LLM work |
+| PRD pipeline | Routes `write-a-prd` → `prd-to-issues` → GSD/SP execution |
+| Spike/sketch support | Exploration workflows before committing to full planning |
 
 ### Unique to Meridian
 | Feature | Description |

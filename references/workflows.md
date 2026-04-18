@@ -30,11 +30,12 @@ Step-by-step guides covering common development scenarios.
 1. Check `/gsd:progress` — understand current state and phase
 2. If feature is a new phase: `/gsd:add-phase` or `/gsd:insert-phase`
 3. `/gsd:discuss-phase` — gather context, produce CONTEXT.md
-4. `/gsd:plan-phase` — create PLAN.md files with task breakdown
-5. `/gsd:execute-phase` — build the feature
-6. `/gsd:verify-work` — validate against phase goals
-7. `requesting-code-review` — code quality check
-8. `finishing-a-development-branch` — merge/PR
+4. `/gsd:spec-phase` — (optional, recommended for ambiguous scope) lock falsifiable requirements in SPEC.md
+5. `/gsd:plan-phase` — create PLAN.md files with task breakdown
+6. `/gsd:execute-phase` — build the feature
+7. `/gsd:verify-work` — validate against phase goals
+8. `requesting-code-review` — code quality check
+9. `/gsd:ship` or `finishing-a-development-branch` — create PR / merge
 
 **Do NOT**: Run `brainstorming` or `writing-plans` (SP standalone skills). Use `discuss-phase` instead — it feeds CONTEXT.md to downstream GSD agents.
 
@@ -128,10 +129,11 @@ Step-by-step guides covering common development scenarios.
 **When**: Phase work is complete, need to close out properly.
 
 **Phase completion:**
-1. `/gsd:verify-work` — validate features match phase acceptance criteria
-2. `requesting-code-review` — code quality review
-3. `finishing-a-development-branch` — merge/PR
-4. `/gsd:progress` — check if more phases remain in milestone
+1. `/gsd:verify-work` — validate features match phase goals
+2. `/gsd:validate-phase` — (optional) audit and fill Nyquist validation gaps
+3. `requesting-code-review` — code quality review
+4. `/gsd:ship` or `/gsd:pr-branch` — create clean PR (filters `.planning/` commits)
+5. `/gsd:progress` — check if more phases remain in milestone
 
 **Milestone completion:**
 1. Complete all phases (steps above)
@@ -190,6 +192,96 @@ Step-by-step guides covering common development scenarios.
 
 ---
 
+## 11. AI/LLM Integration Phase
+
+**When**: A phase involves building AI features — LLM calls, embeddings, RAG, agents, etc.
+
+**Steps:**
+1. `/gsd:ai-integration-phase` — produces AI-SPEC.md:
+   - Framework selection (interactive decision matrix)
+   - Implementation guidance from official docs
+   - Evaluation strategy with rubrics and failure modes
+2. `/gsd:plan-phase` — create plans informed by AI-SPEC.md
+3. `/gsd:execute-phase` — implement the AI features
+4. `/gsd:verify-work` — validate features match phase goals
+5. `/gsd:eval-review` — retroactive audit of evaluation coverage (COVERED/PARTIAL/MISSING per dimension)
+6. `requesting-code-review` — code quality + AI-specific review
+7. `/gsd:ship` — create PR
+
+**Key insight**: AI-SPEC.md is the contract between intent and implementation, similar to UI-SPEC.md. It ensures you have an eval strategy BEFORE you build, not after.
+
+---
+
+## 12. Spike / Feasibility Exploration
+
+**When**: You're not sure if an approach will work before committing to full planning.
+
+**Steps:**
+1. `/gsd:spike` — run a throwaway experiment
+   - Time-boxed, no production code
+   - Validate one specific assumption
+2. `/gsd:spike-wrap-up` — package findings into a persistent skill for the project
+3. Route by result:
+   - **Feasible** → `/gsd:discuss-phase` with spike findings as input
+   - **Infeasible** → pivot approach, spike again or redesign
+
+**For UI exploration**: Use `/gsd:sketch` → `/gsd:sketch-wrap-up` instead — rapid HTML mockups with multi-variant exploration.
+
+---
+
+## 13. PRD-Driven Development
+
+**When**: Starting from business requirements, not technical tasks. Product-first workflow.
+
+**Steps:**
+1. `write-a-prd` (SP) — structured problem collection via interview:
+   - Problem definition, user stories, constraints
+   - Codebase analysis for integration points
+   - Module design and acceptance criteria
+   - Outputs as a GitHub issue
+2. `prd-to-issues` (SP) — break the PRD into vertical-slice GitHub issues
+3. Route issues to the right system:
+   - **GSD project** (`.planning/` exists): `/gsd:add-phase` per issue group
+   - **New project**: `/gsd:new-project` using PRD as input
+   - **Standalone**: `brainstorming` → `writing-plans` per issue
+
+**Key insight**: The PRD captures WHAT and WHY. GSD/SP captures HOW. Don't mix them.
+
+---
+
+## 14. Architecture Improvement
+
+**When**: Codebase has accumulated friction — hard to test, tightly coupled, unclear boundaries.
+
+**Steps:**
+1. `improve-codebase-architecture` (SP) — explores codebase, surfaces friction:
+   - Testability improvements
+   - Module-deepening refactors
+   - Proposes changes as GitHub issue RFCs
+2. Review the RFC issues
+3. Route each approved RFC:
+   - **GSD project**: `/gsd:add-phase` or `/gsd:insert-phase`
+   - **Standalone**: `writing-plans` → `subagent-driven-development`
+
+---
+
+## 15. Receiving Code Review Feedback
+
+**When**: You've received review comments on a PR and need to address them.
+
+**Steps:**
+1. `receiving-code-review` (SP) — verify each suggestion:
+   - Is the reviewer's concern valid?
+   - Does the suggested fix actually work?
+   - Would the change introduce regressions?
+2. Implement verified fixes
+3. Push back on incorrect suggestions with evidence
+4. `verification-before-completion` — prove fixes work
+
+**Do NOT**: Blindly implement every review comment. Some suggestions are wrong or lack context.
+
+---
+
 ## Utility Commands
 
 These don't follow a workflow — use them as needed:
@@ -203,5 +295,18 @@ These don't follow a workflow — use them as needed:
 | `/gsd:intel` | Query codebase intelligence before planning |
 | `/gsd:stats` | View project metrics and timeline |
 | `/gsd:note` | Capture an idea for later |
+| `/gsd:add-todo` | Capture a task from conversation context |
+| `/gsd:check-todos` | List pending todos and select one |
+| `/gsd:add-backlog` | Park an idea in the backlog (999.x) |
+| `/gsd:review-backlog` | Promote backlog items to active milestone |
 | `/gsd:plant-seed` | Save an idea with trigger conditions |
+| `/gsd:explore` | Socratic ideation — think before committing |
 | `/gsd:session-report` | Summarize current session's work |
+| `/gsd:health` | Diagnose `.planning/` directory health |
+| `/gsd:forensics` | Post-mortem for failed workflows |
+| `/gsd:undo` | Safe revert of phase/plan commits |
+| `/gsd:docs-update` | Generate/update docs verified against codebase |
+| `/gsd:extract_learnings` | Extract patterns from completed phases |
+| `grill-me` | Stress-test a plan via relentless interview |
+| `changelog-generator` | Auto-generate changelog from git commits |
+| `webapp-testing` | Playwright-based browser testing |

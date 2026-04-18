@@ -56,14 +56,26 @@ Then run `/meridian:init` — it creates `.meridian/state.db` and imports existi
 |-------------------|-------------------|
 | `/gsd:new-project` | `/meridian:init` |
 | `/gsd:discuss-phase` | `/meridian:discuss` |
+| `/gsd:spec-phase` | `/meridian:discuss` (spec built-in) |
 | `/gsd:plan-phase` | `/meridian:plan` |
 | `/gsd:execute-phase` | `/meridian:execute` |
 | `/gsd:verify-work` | `/meridian:verify-phase` |
+| `/gsd:validate-phase` | `/meridian:verify-phase` (Nyquist built-in) |
 | `/gsd:resume-work` | `/meridian:resume` (deterministic) |
 | `/gsd:quick` | `/meridian:quick` |
 | `/gsd:fast` | `/meridian:fast` |
+| `/gsd:ship` | `/meridian:ship` |
+| `/gsd:pr-branch` | `/meridian:pr-branch` |
+| `/gsd:autonomous` | `/meridian:autonomous` |
+| `/gsd:insert-phase` | `/meridian:insert-phase` |
+| `/gsd:remove-phase` | `/meridian:remove-phase` |
+| `/gsd:undo` | `/meridian:revert` |
 | `requesting-code-review` | `/meridian:review` (two-stage) |
+| `receiving-code-review` | `/meridian:review` (handles both sides) |
 | `systematic-debugging` | `/meridian:debug` (with KB) |
+| `/gsd:note` | `/meridian:note` |
+| `/gsd:plant-seed` | `/meridian:seed` |
+| `/gsd:session-report` | `/meridian:report` |
 | `/torque:status` | `/meridian:status` or `/meridian:dashboard` |
 | `/torque:next` | `/meridian:next` |
 

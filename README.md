@@ -21,16 +21,20 @@ One routing decision based on one question: **does `.planning/` exist?**
 ```
 START: "I need to do development work"
   │
-  ├─ Bug fix?         → systematic-debugging FIRST, then route
-  ├─ Code review?     → requesting-code-review (always SP)
+  ├─ Bug fix?           → systematic-debugging FIRST, then route
+  ├─ Code review?       → requesting-code-review (send) / receiving-code-review (receive)
+  ├─ Uncertain approach? → /gsd:spike (validate before committing)
+  ├─ Need a PRD?        → write-a-prd → prd-to-issues → route to GSD/SP
   │
   ├─ .planning/ exists? (GSD project)
   │   ├─ Trivial fix      → /gsd:fast
   │   ├─ Small task        → /gsd:quick
-  │   ├─ Feature work      → discuss → plan → execute
+  │   ├─ Feature work      → discuss → spec → plan → execute
+  │   ├─ AI/LLM phase     → /gsd:ai-integration-phase → plan → execute → eval-review
   │   ├─ UI/frontend       → /gsd:ui-phase → implement → /gsd:ui-review
   │   ├─ Resume work       → /gsd:resume-work
-  │   └─ Phase complete    → verify → code review → ship
+  │   ├─ Phase complete    → verify → code review → /gsd:ship
+  │   └─ Capture idea      → /gsd:note / /gsd:add-backlog / /gsd:plant-seed
   │
   └─ No .planning/? (standalone)
       ├─ New project       → /gsd:new-project
@@ -56,13 +60,17 @@ GSD orchestrates *what* to build. Superpowers enforce *how* to build it correctl
 | `/torque:next` | Smart next-action — reads state, suggests one command |
 | `/torque:migrate` | Assess upgrade path to Meridian |
 
-## What's New in v0.2
+## What's New in v0.3
 
-- **4 commands** — status, check, next, migrate
-- **Extended routing** for GSD 1.34+ features: UI phases, security audits, autonomous execution, workstreams, persistent debugging, code review + auto-fix
-- **Complexity escalation** guide: trivial → small → medium → large → autonomous
-- **Conflict resolution** reference for when things go wrong
-- **Comparison matrix** with Meridian and raw GSD+SP
+- **Full GSD + SP coverage** — routes 40+ GSD commands and 15+ Superpowers skills
+- **AI/LLM integration path** — `/gsd:ai-integration-phase` → AI-SPEC.md → eval pipeline
+- **Spec phase in pipeline** — `/gsd:spec-phase` locks falsifiable requirements before planning
+- **Spike/sketch exploration** — validate feasibility before committing to full planning
+- **PRD pipeline** — `write-a-prd` → `prd-to-issues` → route to execution
+- **Ship flow** — `/gsd:ship` and `/gsd:pr-branch` for clean PRs (filters `.planning/`)
+- **Review both ways** — `requesting-code-review` + `receiving-code-review`
+- **12 integration rules** (was 7), **15 workflow guides** (was 10), **10 conflict scenarios** (was 7)
+- **Extended utilities** — backlog, todos, spikes, architecture analysis, changelog, browser testing
 
 See [CHANGELOG.md](CHANGELOG.md) for full details.
 
@@ -109,9 +117,14 @@ torque/
 2. **Brainstorming**: `discuss-phase` for GSD work, `brainstorming` for standalone only.
 3. **Subagent execution**: GSD executors OR SP subagent-driven-dev. Never nested.
 4. **Debugging**: SP `systematic-debugging` runs first for all bugs.
-5. **Code review**: Always run after GSD `verify-work` — fills GSD's missing review step.
-6. **UI discipline**: Run `/gsd:ui-phase` before frontend implementation, `/gsd:ui-review` after.
-7. **Learnings persist**: GSD captures execution patterns. Query with `/gsd:intel`.
+5. **Code review (send)**: Always run after GSD `verify-work` — fills GSD's missing review step.
+6. **Code review (receive)**: Use `receiving-code-review` to verify feedback before implementing.
+7. **UI discipline**: Run `/gsd:ui-phase` before frontend implementation, `/gsd:ui-review` after.
+8. **AI discipline**: Run `/gsd:ai-integration-phase` before AI/LLM work, `/gsd:eval-review` after.
+9. **Spec before plan**: Run `/gsd:spec-phase` between discuss and plan for ambiguous scope.
+10. **Spike before commit**: Run `/gsd:spike` when feasibility is uncertain.
+11. **Ship cleanly**: Use `/gsd:ship` or `/gsd:pr-branch` to filter `.planning/` from PRs.
+12. **Learnings persist**: GSD captures execution patterns. Query with `/gsd:intel`.
 
 ## Torque vs Meridian
 

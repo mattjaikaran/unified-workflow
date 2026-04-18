@@ -25,12 +25,23 @@ ls ~/.claude/skills/gsd-* 2>/dev/null | head -5
 ### Step 2: Check Superpowers installation
 
 ```bash
-# Check for core SP skills
-for skill in systematic-debugging test-driven-development brainstorming writing-plans subagent-driven-development requesting-code-review verification-before-completion finishing-a-development-branch; do
+# Check for core SP skills (required)
+for skill in systematic-debugging test-driven-development brainstorming writing-plans subagent-driven-development requesting-code-review verification-before-completion finishing-a-development-branch receiving-code-review; do
   if ls ~/.claude/skills/$skill/SKILL.md 2>/dev/null > /dev/null; then
     echo "  ✓ $skill"
   else
     echo "  ✗ $skill (MISSING)"
+  fi
+done
+
+# Check for extended SP skills (optional but recommended)
+echo ""
+echo "Extended skills:"
+for skill in grill-me improve-codebase-architecture write-a-prd prd-to-issues changelog-generator webapp-testing playwright-skill ci-cd monitoring-observability; do
+  if ls ~/.claude/skills/$skill/SKILL.md 2>/dev/null > /dev/null; then
+    echo "  ✓ $skill"
+  else
+    echo "  ○ $skill (optional, not installed)"
   fi
 done
 ```

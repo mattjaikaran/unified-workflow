@@ -40,9 +40,9 @@ Work through this tree top-to-bottom. First match wins.
    │      → `requesting-code-review`
    │      Why: GSD has no review step — SP fills the gap.
    │
-   │   e. Is a phase reviewed but not merged/shipped?
-   │      → `finishing-a-development-branch`
-   │      Why: Ship it.
+   │   e. Is a phase reviewed but not shipped?
+   │      → `/gsd:ship` or `/gsd:pr-branch`
+   │      Why: Ship cleanly — filters .planning/ commits from PR.
    │
    │   f. Are all phases in the current milestone complete?
    │      → `/gsd:audit-milestone` then `/gsd:complete-milestone`
@@ -52,13 +52,21 @@ Work through this tree top-to-bottom. First match wins.
    │      → `/gsd:execute-phase`
    │      Why: Plans exist, execute them.
    │
-   │   h. Is the next phase discussed but not planned?
+   │   h. Is the next phase discussed and spec'd but not planned?
    │      → `/gsd:plan-phase`
-   │      Why: Context exists, create plans.
+   │      Why: Context and spec exist, create plans.
+   │
+   │   h2. Is the next phase discussed but not spec'd (ambiguous scope)?
+   │       → `/gsd:spec-phase`
+   │       Why: Lock falsifiable requirements before planning.
    │
    │   i. Is there a next phase that hasn't been discussed?
    │      → `/gsd:discuss-phase`
    │      Why: Gather context before planning.
+   │
+   │   i2. Is this an AI/LLM phase that hasn't been designed?
+   │       → `/gsd:ai-integration-phase`
+   │       Why: Produce AI-SPEC.md with framework + eval strategy.
    │
    │   j. No more phases in roadmap?
    │      → `/gsd:new-milestone` or project complete
