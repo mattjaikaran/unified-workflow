@@ -92,7 +92,7 @@ If a dependency is missing:
 
 ### How to Install
 GSD: https://github.com/cline/gsd
-Superpowers: https://github.com/nicobailon/claude-code-superpowers
+Superpowers: https://github.com/obra/superpowers
 ```
 
 ## Rules

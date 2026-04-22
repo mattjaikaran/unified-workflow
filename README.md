@@ -1,6 +1,6 @@
 # Torque
 
-> **v0.3.0** — A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that converts [GSD](https://github.com/cline/gsd) + [Superpowers](https://github.com/nicobailon/claude-code-superpowers) into one coherent workflow
+> **v0.3.0** — A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that converts [GSD](https://github.com/cline/gsd) + [Superpowers](https://github.com/obra/superpowers) into one coherent workflow
 
 One skill that makes two powerful systems work as one. No database, no config, no overhead — just intelligent routing.
 
@@ -88,7 +88,7 @@ ls ~/.claude/skills/torque/SKILL.md && echo "Installed"
 ## Prerequisites
 
 - [GSD](https://github.com/cline/gsd) (v1.34+ recommended)
-- [Superpowers](https://github.com/nicobailon/claude-code-superpowers)
+- [Superpowers](https://github.com/obra/superpowers)
 
 Run `/torque:check` after install to verify everything is wired up.
 
